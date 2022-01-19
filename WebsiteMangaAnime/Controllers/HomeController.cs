@@ -1,30 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using PagedList;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
+using WebsiteMangaAnime.Models;
+using WebsiteMangaAnime.Models.BaseClasses;
+using WebsiteMangaAnime.Models.DatabaseControl;
 
 namespace WebsiteMangaAnime.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private IDatabase db;
+        private const int pageSize = 20;
+        public HomeController()
         {
-            return View();
+            db = new Database();
         }
-
-        public ActionResult About()
+        public ActionResult Main() => View();
+        public ActionResult Anime(int? page)
         {
-            ViewBag.Message = "Your application description page.";
-
-            return View();
+            IPagedList<Anime> animes = GetDescElementsPage<Anime>(page);
+            return View(animes);
         }
-
-        public ActionResult Contact()
+        public ActionResult Manga(int? page)
         {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
+            IPagedList<Manga> mangas = GetDescElementsPage<Manga>(page);
+            return View(mangas);
+        }
+        private IPagedList<T> GetDescElementsPage<T>(int? page)
+            where T : Product
+        {
+            return db.GetElements<T>()
+                .OrderByDescending(x => x.RecommendationsNumber)
+                .ToPagedList(page ?? 1, pageSize);
         }
     }
 }

@@ -3,12 +3,12 @@ using System.Collections.Generic;
 
 namespace WebsiteMangaAnime.Models.DatabaseControl
 {
-    internal interface IDatabase<TEntity> : IDisposable
+    internal interface IDatabase : IDisposable
     {
-        IEnumerable<TEntity> GetElements();
-        TEntity GetElementById(Guid id);
-        void Create(TEntity item);
-        void Update(TEntity item);
-        void Delete(Guid id);
+        IEnumerable<TEntity> GetElements<TEntity>() where TEntity : class;
+        TEntity GetElementById<TEntity>(Guid id) where TEntity : class;
+        void Create<TEntity>(TEntity item) where TEntity : class;
+        void Update<TEntity>(TEntity item) where TEntity : class;
+        void Delete<TEntity>(Guid id) where TEntity : class;
     }
 }

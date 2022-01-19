@@ -5,23 +5,25 @@ using WebsiteMangaAnime.Models.Context;
 
 namespace WebsiteMangaAnime.Models.DatabaseControl
 {
-    public class Database<TEntity> : IDatabase<TEntity> where TEntity : class
+    public class Database : IDatabase
     {
         private AppDbContext db;
-        private DbSet<TEntity> entity;
         public Database()
         {
             this.db = new AppDbContext();
-            this.entity = db.Set<TEntity>();
         }
-        public async void Create(TEntity item)
+        public async void Create<TEntity>(TEntity item)
+            where TEntity : class
         {
+            var entity = db.Set<TEntity>();
             entity.Add(item);
             await db.SaveChangesAsync();
         }
-        public async void Delete(Guid id)
+        public async void Delete<TEntity>(Guid id)
+            where TEntity : class
         {
-            TEntity item = entity.Find(id);
+            var entity = db.Set<TEntity>();
+            var item = entity.Find(id);
             if (item != null)
                 entity.Remove(item);
             await db.SaveChangesAsync();
@@ -30,15 +32,18 @@ namespace WebsiteMangaAnime.Models.DatabaseControl
         {
             db.Dispose();
         }
-        public TEntity GetElementById(Guid id)
+        public TEntity GetElementById<TEntity>(Guid id)
+            where TEntity : class
         {
-            return entity.Find(id);
+            return db.Set<TEntity>().Find(id);
         }
-        public IEnumerable<TEntity> GetElements()
+        public IEnumerable<TEntity> GetElements<TEntity>()
+            where TEntity : class
         {
-            return entity;
+            return db.Set<TEntity>();
         }
-        public async void Update(TEntity item)
+        public async void Update<TEntity>(TEntity item)
+            where TEntity : class
         {
             db.Entry<TEntity>(item).State = EntityState.Modified;
             await db.SaveChangesAsync();

@@ -19,16 +19,16 @@ namespace WebsiteMangaAnime.Models.BaseClasses
         public double Rating { get; set; }
         [Required, Display(Name = "Количество рекомендаций")]
         public int RecommendationsNumber { get; set; }
-        [Required, Display(Name = "Жанры")]
+        [Required, EnumDataType(typeof(Genre)), Display(Name = "Жанры")]
         public ICollection<Genre> Genres { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), DataType(DataType.Date), Display(Name = "Год")]
         public DateTime Year { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Описание")]
         public string Description { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Обложка")]
-        public Image Image { get; set; }
+        public virtual Image Image { get; set; }
         [Required, Display(Name = "Отзывы")]
-        public ICollection<ProductReview> ProductReviews { get; set; }
+        public virtual ICollection<ProductReview> ProductReviews { get; set; }
         public Product()
         {
             //this.Id = Guid.NewGuid(); TODO разобраться с генерацией гуида

@@ -26,9 +26,9 @@ namespace WebsiteMangaAnime.Models
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Описание")]
         public string Description { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Обложка")]
-        public Image Image { get; set; }
+        public virtual Image Image { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Отзывы")]
-        public ICollection<CharacterReview> CharacterReviews { get; set; }
+        public virtual ICollection<CharacterReview> CharacterReviews { get; set; }
         public Character()
         {
             this.CharacterReviews = new List<CharacterReview>();

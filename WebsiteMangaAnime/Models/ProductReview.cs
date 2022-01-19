@@ -9,8 +9,8 @@ namespace WebsiteMangaAnime.Models
         [Required, Display(Name = "Рекомендуется")]
         public bool IsRecommended { get; set; }
         [Required, Display(Name = "Произведение")]
-        public Product Product { get; set; }
+        public virtual Product Product { get; set; }
         [Required, Display(Name = "Пользователь")]
-        public IUser User { get; set; }
+        public virtual IUser User { get; set; }
     }
 }

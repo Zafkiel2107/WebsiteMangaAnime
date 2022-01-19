@@ -17,7 +17,7 @@ namespace WebsiteMangaAnime.Models
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Возраст")]
         public byte Age { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Аватар")]
-        public Image Image { get; set; }
+        public virtual Image Image { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), DataType(DataType.EmailAddress), Display(Name = "Email")]
         public string Email { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), HiddenInput(DisplayValue = false)]
@@ -31,11 +31,11 @@ namespace WebsiteMangaAnime.Models
         [Required]
         public string SecurityStamp { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Роль")]
-        public IRole Role { get; set; }
+        public virtual IRole Role { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Отзывы на произведения")]
-        public ICollection<ProductReview> ProductReviews { get; set; }
+        public virtual ICollection<ProductReview> ProductReviews { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Отзывы на персонажей")]
-        public ICollection<CharacterReview> CharacterReviews { get; set; }
+        public virtual ICollection<CharacterReview> CharacterReviews { get; set; }
         public User()
         {
             this.ProductReviews = new List<ProductReview>();

@@ -7,8 +7,8 @@ namespace WebsiteMangaAnime.Models
     public class CharacterReview : Review
     {
         [Required, Display(Name = "Персонаж")]
-        public Character Character { get; set; }
+        public virtual Character Character { get; set; }
         [Required, Display(Name = "Пользователь")]
-        public IUser User { get; set; }
+        public virtual IUser User { get; set; }
     }
 }
