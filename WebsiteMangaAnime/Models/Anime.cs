@@ -13,5 +13,7 @@ namespace WebsiteMangaAnime.Models
         public byte Season { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Серий")]
         public short Series { get; set; }
+        [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Трейлер")] 
+        public string VideoLink { get; set; }
     }
 }

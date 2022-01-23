@@ -16,6 +16,7 @@ namespace WebsiteMangaAnime.Models.BaseClasses
         public bool IsChecked { get; set; }
         public Review()
         {
+            this.Id = Guid.NewGuid();
             this.IsChecked = false;
         }
     }

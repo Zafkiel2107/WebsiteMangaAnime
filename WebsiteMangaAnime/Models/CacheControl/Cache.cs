@@ -4,7 +4,7 @@ using System.Runtime.Caching;
 
 namespace WebsiteMangaAnime.Models.CacheControl
 {
-    public class Cache<TEntity> : ICache<TEntity> where TEntity : class
+    public class Cache : ICache
     {
         private MemoryCache cache;
         private double cacheDuration;
@@ -13,7 +13,7 @@ namespace WebsiteMangaAnime.Models.CacheControl
             this.cache = MemoryCache.Default;
             this.cacheDuration = double.Parse(ConfigurationManager.AppSettings["CacheDuration"]);
         }
-        public bool Add(TEntity item, Guid id)
+        public bool Add<TEntity>(TEntity item, Guid id) where TEntity : class
         {
             return cache.Add(id.ToString(), item, DateTime.Now.AddMinutes(cacheDuration));
         }
@@ -28,11 +28,11 @@ namespace WebsiteMangaAnime.Models.CacheControl
         {
             cache.Dispose();
         }
-        public TEntity GetElementById(Guid id)
+        public TEntity GetElementById<TEntity>(Guid id) where TEntity : class
         {
             return cache.Get(id.ToString()) as TEntity;
         }
-        public void Update(TEntity item, Guid id)
+        public void Update<TEntity>(TEntity item, Guid id) where TEntity : class
         {
             cache.Set(id.ToString(), item, DateTime.Now.AddMinutes(cacheDuration));
         }

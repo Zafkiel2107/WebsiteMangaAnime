@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Web.Mvc;
 
 namespace WebsiteMangaAnime.Models.BaseClasses
@@ -19,19 +21,19 @@ namespace WebsiteMangaAnime.Models.BaseClasses
         public double Rating { get; set; }
         [Required, Display(Name = "Количество рекомендаций")]
         public int RecommendationsNumber { get; set; }
-        [Required, EnumDataType(typeof(Genre)), Display(Name = "Жанры")]
-        public ICollection<Genre> Genres { get; set; }
+        [Required, Display(Name = "Жанры")]
+        public virtual ICollection<Genre> Genres { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), DataType(DataType.Date), Display(Name = "Год")]
-        public DateTime Year { get; set; }
+        public short Year { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Описание")]
         public string Description { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Обложка")]
-        public virtual Image Image { get; set; }
+        public string ImageLink { get; set; }
         [Required, Display(Name = "Отзывы")]
         public virtual ICollection<ProductReview> ProductReviews { get; set; }
         public Product()
         {
-            //this.Id = Guid.NewGuid(); TODO разобраться с генерацией гуида
+            this.Id = Guid.NewGuid();
             this.RecommendationsNumber = 0;
             this.Genres = new List<Genre>();
             this.ProductReviews = new List<ProductReview>();
@@ -50,9 +52,5 @@ namespace WebsiteMangaAnime.Models.BaseClasses
         PG13 = 3,
         R = 4,
         RNC17 = 5,
-    }
-    public enum Genre : byte
-    {
-        //TODO
     }
 }

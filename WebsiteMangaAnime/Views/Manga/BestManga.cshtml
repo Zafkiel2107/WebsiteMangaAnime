@@ -25,15 +25,15 @@
         @foreach (var manga in Model)
         {
             <p>
-                @manga.Image
+                <input type="image" onclick="location.href='@Url.Action("GetManga", "Manga", new { id = manga.Id })'" src="@System.Configuration.ConfigurationManager.AppSettings["ImagePath"]@manga.ImageLink" />
             </p>
-            <p>
+            <b>
                 @manga.Name
-            </p>
+            </b>
         }
     </div>
     <div>
         <p>Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount</p>
-        <p>@Html.PagedListPager(Model, page => Url.Action("MainPage", new { page }))</p>
+        <p>@Html.PagedListPager(Model, page => Url.Action("BestManga", new { page }))</p>
     </div>
 </div>

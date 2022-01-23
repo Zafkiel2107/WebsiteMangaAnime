@@ -13,5 +13,7 @@ namespace WebsiteMangaAnime.Models
         public byte Tom { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Глав")]
         public short Chapter { get; set; }
+        [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Аннотация")]
+        public string MangaLink { get; set; }
     }
 }

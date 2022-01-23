@@ -1,0 +1,83 @@
+﻿@model WebsiteMangaAnime.Models.Manga
+
+@{
+    ViewBag.Title = $"{Model.Name}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <h3 class="list-group-item-text">@Model.Name</h3>
+            <h4 class="list-group-item-text">@Html.DisplayNameFor(x => x.RecommendationsNumber) : @Html.DisplayTextFor(x => x.RecommendationsNumber)</h4>
+        </li>
+    </ul>
+    <div class="col-md-8">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => x.Rating)</b> : @Html.DisplayTextFor(x => x.Rating)
+                </p>
+            </li>
+            <li class="list-group-item">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => x.Status)</b> : @Html.DisplayTextFor(x => x.Status)
+                </p>
+            </li>
+            <li class="list-group-item">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => x.Year)</b> : @Html.DisplayTextFor(x => x.Year)
+                </p>
+            </li>
+            <li class="list-group-item">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => x.Author)</b> : @Html.DisplayTextFor(x => x.Author)
+                </p>
+            </li>
+            <li class="list-group-item">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => x.Publisher)</b> : @Html.DisplayTextFor(x => x.Publisher)
+                </p>
+            </li>
+            <li class="list-group-item">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => x.AgeRating)</b> : @Html.DisplayTextFor(x => x.AgeRating)
+                </p>
+            </li>
+            <li class="list-group-item">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => x.Tom)</b> : @Html.DisplayTextFor(x => x.Tom)
+                </p>
+            </li>
+            <li class="list-group-item">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => x.Chapter)</b> : @Html.DisplayTextFor(x => x.Chapter)
+                </p>
+            </li>
+            <li class="list-group-item">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => x.Description)</b> : @Html.DisplayTextFor(x => x.Description)
+                </p>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <img class="img-thumbnail" src="@System.Configuration.ConfigurationManager.AppSettings["ImagePath"]@Model.ImageLink" />
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-8">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => x.MangaLink)</b>
+                </p>
+            </li>
+            <li class="list-group-item">
+                <a target="_blank" href="@System.Configuration.ConfigurationManager.AppSettings["WebPath"]@Model.MangaLink">Ознакомиться с мангой</a>
+            </li>
+        </ul>
+    </div>
+</div>
+

@@ -13,11 +13,15 @@
         </p>
     </div>
     <div class="input-lg">
-        @using (Html.BeginForm("Search", "Search", FormMethod.Post))
+        @using (Html.BeginForm("Search", "Anime", FormMethod.Post))
         {
             <label><input type="text" name="srcvl" class="form-control" placeholder="Искать по аниме" /></label>
             <label><input type="submit" class="btn btn-primary" value="Поиск" /></label>
         }
+    </div>
+    <div class="glyphicon-filter">
+        <label class="control-label">Фильтр: </label>
+        @Html.EnumDropDownListFor(x => x.)
     </div>
 </div>
 <div>
@@ -25,15 +29,15 @@
         @foreach (var anime in Model)
         {
             <p>
-                @anime.Image
+                <input type="image" onclick="location.href='@Url.Action("GetAnime", "Anime", new { id = anime.Id })'" src="@System.Configuration.ConfigurationManager.AppSettings["ImagePath"]@anime.ImageLink" />
             </p>
-            <p>
+            <b>
                 @anime.Name
-            </p>
+            </b>
         }
     </div>
-        <div>
-            <p>Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount</p>
-            <p>@Html.PagedListPager(Model, page => Url.Action("MainPage", new { page }))</p>
-        </div>
+    <div>
+        <p>Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount</p>
+        <p>@Html.PagedListPager(Model, page => Url.Action("BestAnime", new { page }))</p>
+    </div>
 </div>

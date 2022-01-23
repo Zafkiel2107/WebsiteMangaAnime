@@ -1,10 +1,12 @@
-﻿<!DOCTYPE html>
+﻿@using System.Diagnostics
+<!DOCTYPE html>
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - приложение ASP.NET</title>
+    @Styles.Render("~/Content/PagedList.css")
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
 </head>
@@ -21,8 +23,8 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Домашняя страница", "Main", "Home")</li>
-                    <li>@Html.ActionLink("Лучшее из аниме", "Anime", "Home")</li>
-                    <li>@Html.ActionLink("Лучшее из манги", "Manga", "Home")</li>
+                    <li>@Html.ActionLink("Лучшее из аниме", "BestAnime", "Anime")</li>
+                    <li>@Html.ActionLink("Лучшее из манги", "BestManga", "Manga")</li>
                 </ul>
             </div>
         </div>
@@ -32,8 +34,13 @@
     </div>
     <div class="container panel-footer">
         <footer>
-            <p>Все данные, представленные на сайте являются ознакомительными и не предполагают распространение.</p>
-            <p>&copy; @DateTime.Now.Year - WebApplication on ASP.NET</p>
+            <div class="col-md-4">
+                <p>Все данные, представленные на сайте являются ознакомительными и не предполагают распространение.</p>
+                <p>&copy; @DateTime.Now.Year - WebApplication on ASP.NET</p>
+            </div>
+            <div class="col-md-4">
+               @* <input type="button" onclick='@Process.Start("C:\\Users\\Kirill\\source\\repos\\WebsiteMangaAnime\\WebsiteAdministration\\WebsiteAdministration\\bin\\Debug\\WebsiteAdministration.exe")'/>*@
+            </div>
         </footer>
     </div>
     @Scripts.Render("~/bundles/jquery")

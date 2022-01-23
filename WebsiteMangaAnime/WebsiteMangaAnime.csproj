@@ -58,7 +58,25 @@
     <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.3\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.3\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.2.0\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.3.0.1\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
     <Reference Include="PagedList, Version=1.17.0.0, Culture=neutral, PublicKeyToken=abbb863e9397c5e1, processorArchitecture=MSIL">
       <HintPath>..\packages\PagedList.1.17.0.0\lib\net40\PagedList.dll</HintPath>
     </Reference>
@@ -142,12 +160,15 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="App_Start\Startup.cs" />
     <Compile Include="Controllers\AnimeController.cs" />
-    <Compile Include="Controllers\BaseControllers\SearchController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\IdentityController.cs" />
+    <Compile Include="Controllers\MangaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Anime.cs" />
     <Compile Include="Models\BaseClasses\Product.cs" />
     <Compile Include="Models\BaseClasses\Review.cs" />
@@ -158,12 +179,16 @@
     <Compile Include="Models\Context\AppDbContext.cs" />
     <Compile Include="Models\DatabaseControl\Database.cs" />
     <Compile Include="Models\DatabaseControl\IDatabase.cs" />
-    <Compile Include="Models\Image.cs" />
+    <Compile Include="Models\Genre.cs" />
+    <Compile Include="Models\IdentityControl\IdentityContext.cs" />
     <Compile Include="Models\LogControl\ExceptionLog.cs" />
+    <Compile Include="Models\LogControl\ExceptionLoggerAttribute.cs" />
     <Compile Include="Models\LogControl\ILogger.cs" />
     <Compile Include="Models\Manga.cs" />
     <Compile Include="Models\ProductReview.cs" />
-    <Compile Include="Models\Role.cs" />
+    <Compile Include="Models\Services\EmailService.cs" />
+    <Compile Include="Models\Services\SmsService.cs" />
+    <Compile Include="Models\Storage\Storage.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -179,8 +204,8 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Views\Home\Anime.cshtml" />
-    <Content Include="Views\Home\Manga.cshtml" />
+    <Content Include="Views\Anime\BestAnime.cshtml" />
+    <Content Include="Views\Manga\BestManga.cshtml" />
     <Content Include="Views\Home\Main.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -204,10 +229,13 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Anime\GetAnime.cshtml" />
+    <Content Include="Views\Manga\GetManga.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Anime\" />
+    <Folder Include="Files\Images\" />
+    <Folder Include="Views\Identity\" />
     <Folder Include="Views\Search\" />
   </ItemGroup>
   <ItemGroup>
