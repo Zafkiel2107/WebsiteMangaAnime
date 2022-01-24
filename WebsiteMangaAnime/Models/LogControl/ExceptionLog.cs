@@ -1,12 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
+using WebsiteMangaAnime.Models.BaseClasses;
 
 namespace WebsiteMangaAnime.Models.LogControl
 {
-    public class ExceptionLog : ILogger
+    public class ExceptionLog : Entity, ILogger
     {
-        [Key, Required]
-        public Guid LogId { get; set; }
         [Required]
         public string ExceptionMessage { get; set; }
         [Required]

@@ -9,6 +9,6 @@ namespace WebsiteMangaAnime.Models
         [Required, Display(Name = "Персонаж")]
         public virtual Character Character { get; set; }
         [Required, Display(Name = "Пользователь")]
-        public virtual IUser User { get; set; }
+        public virtual User User { get; set; }
     }
 }

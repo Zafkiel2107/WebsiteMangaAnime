@@ -1,21 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Web.Mvc;
 using WebsiteMangaAnime.Models.BaseClasses;
 
 namespace WebsiteMangaAnime.Models
 {
-    public class Genre
+    public class Genre : Entity
     {
-        [Key, Required, HiddenInput(DisplayValue = false)]
-        public Guid GenreId { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Жанр")]
         public GenreType GenreType { get; set; }
         public Genre()
         {
-            GenreId = Guid.NewGuid();
+            this.Id = Guid.NewGuid().ToString();
         }
     }
     public enum GenreType : byte

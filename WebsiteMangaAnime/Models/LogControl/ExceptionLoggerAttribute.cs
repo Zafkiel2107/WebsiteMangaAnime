@@ -18,7 +18,7 @@ namespace WebsiteMangaAnime.Models.LogControl
         {
             ExceptionLog exceptionLog = new ExceptionLog
             {
-                LogId = Guid.NewGuid(),
+                Id = Guid.NewGuid().ToString(),
                 ActionName = exceptionContext.RouteData.Values["action"].ToString(),
                 ControllerName = exceptionContext.RouteData.Values["controller"].ToString(),
                 ExceptionMessage = exceptionContext.Exception.Message,

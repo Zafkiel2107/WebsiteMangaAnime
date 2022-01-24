@@ -1,12 +1,14 @@
 ﻿using System;
+using WebsiteMangaAnime.Models.BaseClasses;
 
 namespace WebsiteMangaAnime.Models.CacheControl
 {
     internal interface ICache : IDisposable
     {
-        TEntity GetElementById<TEntity>(Guid id) where TEntity : class;
-        bool Add<TEntity>(TEntity item, Guid id) where TEntity : class;
-        void Update<TEntity>(TEntity item, Guid id) where TEntity : class;
-        void Delete(Guid id);
+        TEntity GetElementById<TEntity>(string id) where TEntity : Entity;
+        bool Add<TEntity>(TEntity item) where TEntity : Entity;
+        void Update<TEntity>(TEntity item) where TEntity : Entity;
+        void Delete(string id);
+        bool IsInCache(string id);
     }
 }

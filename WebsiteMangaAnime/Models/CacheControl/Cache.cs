@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Runtime.Caching;
+using WebsiteMangaAnime.Models.BaseClasses;
 
 namespace WebsiteMangaAnime.Models.CacheControl
 {
@@ -13,28 +14,34 @@ namespace WebsiteMangaAnime.Models.CacheControl
             this.cache = MemoryCache.Default;
             this.cacheDuration = double.Parse(ConfigurationManager.AppSettings["CacheDuration"]);
         }
-        public bool Add<TEntity>(TEntity item, Guid id) where TEntity : class
+        public bool Add<TEntity>(TEntity item) where TEntity : Entity
         {
-            return cache.Add(id.ToString(), item, DateTime.Now.AddMinutes(cacheDuration));
+            return cache.Add(item.Id, item, DateTime.Now.AddMinutes(cacheDuration));
         }
-        public void Delete(Guid id)
+        public void Delete(string id)
         {
-            if (cache.Contains(id.ToString()))
+            if (cache.Contains(id))
             {
-                cache.Remove(id.ToString());
+                cache.Remove(id);
             }
         }
         public void Dispose()
         {
             cache.Dispose();
         }
-        public TEntity GetElementById<TEntity>(Guid id) where TEntity : class
+        public TEntity GetElementById<TEntity>(string id) where TEntity : Entity
         {
-            return cache.Get(id.ToString()) as TEntity;
+            return cache.Get(id) as TEntity;
         }
-        public void Update<TEntity>(TEntity item, Guid id) where TEntity : class
+
+        public bool IsInCache(string id)
         {
-            cache.Set(id.ToString(), item, DateTime.Now.AddMinutes(cacheDuration));
+            return cache.Contains(id);
+        }
+
+        public void Update<TEntity>(TEntity item) where TEntity : Entity
+        {
+            cache.Set(item.Id, item, DateTime.Now.AddMinutes(cacheDuration));
         }
     }
 }

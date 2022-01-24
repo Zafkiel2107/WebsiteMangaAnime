@@ -4,10 +4,8 @@ using System.Web.Mvc;
 
 namespace WebsiteMangaAnime.Models.BaseClasses
 {
-    public abstract class Review
+    public abstract class Review : Entity
     {
-        [Key, Required, HiddenInput(DisplayValue = false)]
-        public Guid Id { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Рейтинг")]
         public Rating Rating { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Отзыв")]
@@ -16,7 +14,7 @@ namespace WebsiteMangaAnime.Models.BaseClasses
         public bool IsChecked { get; set; }
         public Review()
         {
-            this.Id = Guid.NewGuid();
+            this.Id = Guid.NewGuid().ToString();
             this.IsChecked = false;
         }
     }

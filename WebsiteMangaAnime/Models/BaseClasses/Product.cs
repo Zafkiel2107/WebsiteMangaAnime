@@ -7,10 +7,8 @@ using System.Web.Mvc;
 
 namespace WebsiteMangaAnime.Models.BaseClasses
 {
-    public abstract class Product
+    public abstract class Product : Entity
     {
-        [Key, Required, HiddenInput(DisplayValue = false)]
-        public Guid Id { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Название")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Статус")]
@@ -33,7 +31,7 @@ namespace WebsiteMangaAnime.Models.BaseClasses
         public virtual ICollection<ProductReview> ProductReviews { get; set; }
         public Product()
         {
-            this.Id = Guid.NewGuid();
+            this.Id = Guid.NewGuid().ToString();
             this.RecommendationsNumber = 0;
             this.Genres = new List<Genre>();
             this.ProductReviews = new List<ProductReview>();

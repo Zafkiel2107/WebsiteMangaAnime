@@ -1,10 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
+using WebsiteMangaAnime.Models.BaseClasses;
 using WebsiteMangaAnime.Models.CacheControl;
 using WebsiteMangaAnime.Models.Context;
 using WebsiteMangaAnime.Models.DatabaseControl;
-using WebsiteMangaAnime.Models.LogControl;
 
 namespace WebsiteMangaAnime.Models.Storage
 {
@@ -17,14 +16,18 @@ namespace WebsiteMangaAnime.Models.Storage
             this.cache = new Cache();
             this.db = new AppDbContext();
         }
-        public async void Create<TEntity>(TEntity item) where TEntity : class
+        public async void Create<TEntity>(TEntity item) where TEntity : Entity
         {
             var entity = db.Set<TEntity>();
             entity.Add(item);
-            await db.SaveChangesAsync();
+            int result = await db.SaveChangesAsync();
+            if(result > 0)
+            {
+                cache.Add<TEntity>(item);
+            }
         }
-        public async void Delete<TEntity>(Guid id)
-            where TEntity : class
+        public async void Delete<TEntity>(string id)
+            where TEntity : Entity
         {
             var entity = db.Set<TEntity>();
             var item = entity.Find(id);
@@ -32,33 +35,43 @@ namespace WebsiteMangaAnime.Models.Storage
             {
                 entity.Remove(item);
             }
-            await db.SaveChangesAsync();
-            cache.Delete(id);
+            int result = await db.SaveChangesAsync();
+            if (result > 0)
+            {
+                cache.Delete(id);
+            }
         }
         public void Dispose()
         {
             db.Dispose();
         }
-        public TEntity GetElementById<TEntity>(Guid id)
-            where TEntity : class
+        public TEntity GetElementById<TEntity>(string id)
+            where TEntity : Entity
         {
-            TEntity item = cache.GetElementById<TEntity>(id);
-            if (item == null)
+            if(cache.IsInCache(id))
             {
-                item = db.Set<TEntity>().Find(id);
+                return cache.GetElementById<TEntity>(id);
             }
-            return item;
+            else
+            {
+                return db.Set<TEntity>().Find(id);
+            }
         }
         public IEnumerable<TEntity> GetElements<TEntity>()
-            where TEntity : class
+            where TEntity : Entity
         {
             return db.Set<TEntity>();
         }
         public async void Update<TEntity>(TEntity item)
-            where TEntity : class
+            where TEntity : Entity
         {
             db.Entry<TEntity>(item).State = EntityState.Modified;
             await db.SaveChangesAsync();
+            int result = await db.SaveChangesAsync();
+            if (result > 0)
+            {
+                cache.Update<TEntity>(item);
+            }
         }
     }
 }

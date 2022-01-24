@@ -1,15 +1,13 @@
 ﻿using PagedList;
-using System;
 using System.Linq;
 using System.Web.Mvc;
-using WebsiteMangaAnime.Controllers.BaseControllers;
 using WebsiteMangaAnime.Models;
 using WebsiteMangaAnime.Models.DatabaseControl;
 using WebsiteMangaAnime.Models.Storage;
 
 namespace WebsiteMangaAnime.Controllers
 {
-    public class AnimeController : SearchController<Anime>
+    public class AnimeController : Controller
     {
         private IDatabase storage;
         private const int pageSize = 20;
@@ -19,12 +17,12 @@ namespace WebsiteMangaAnime.Controllers
         }
         public ActionResult BestAnime(int? page)
         {
-            IPagedList<Anime> animes = db.GetElements<Anime>()
+            IPagedList<Anime> animes = storage.GetElements<Anime>()
                 .OrderByDescending(x => x.RecommendationsNumber)
                 .ToPagedList(page ?? 1, pageSize);
             return View(animes);
         }
-        public ActionResult GetAnime(Guid id)
+        public ActionResult GetAnime(string id)
         {
             Anime anime = storage.GetElementById<Anime>(id);
             return View(anime);

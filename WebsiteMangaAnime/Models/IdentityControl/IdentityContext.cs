@@ -2,7 +2,6 @@
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
-using System;
 using WebsiteMangaAnime.Models.Context;
 using WebsiteMangaAnime.Models.Services;
 

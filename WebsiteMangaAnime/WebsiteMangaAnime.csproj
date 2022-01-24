@@ -65,6 +65,9 @@
     <Reference Include="Microsoft.Owin, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.4.2.0\lib\net45\Microsoft.Owin.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.Owin.Host.SystemWeb, Version=4.2.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Host.SystemWeb.4.2.0\lib\net45\Microsoft.Owin.Host.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Owin.Security, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.3.0.1\lib\net45\Microsoft.Owin.Security.dll</HintPath>
     </Reference>
@@ -87,6 +90,9 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.IdentityModel" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
     <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
@@ -94,6 +100,9 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
@@ -170,6 +179,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Anime.cs" />
+    <Compile Include="Models\BaseClasses\Entity.cs" />
     <Compile Include="Models\BaseClasses\Product.cs" />
     <Compile Include="Models\BaseClasses\Review.cs" />
     <Compile Include="Models\CacheControl\Cache.cs" />
@@ -181,6 +191,7 @@
     <Compile Include="Models\DatabaseControl\IDatabase.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityControl\IdentityContext.cs" />
+    <Compile Include="Models\IdentityControl\IdentityViewModels.cs" />
     <Compile Include="Models\LogControl\ExceptionLog.cs" />
     <Compile Include="Models\LogControl\ExceptionLoggerAttribute.cs" />
     <Compile Include="Models\LogControl\ILogger.cs" />
@@ -231,11 +242,15 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Anime\GetAnime.cshtml" />
     <Content Include="Views\Manga\GetManga.cshtml" />
+    <Content Include="Views\Identity\Register.cshtml" />
+    <Content Include="Views\Identity\DisplayConfirmEmailInfo.cshtml" />
+    <Content Include="Views\Identity\SuccessedConfirmEmail.cshtml" />
+    <Content Include="Views\Identity\DisplayResetPasswordInfo.cshtml" />
+    <Content Include="Views\Identity\SuccessedResetPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Files\Images\" />
-    <Folder Include="Views\Identity\" />
     <Folder Include="Views\Search\" />
   </ItemGroup>
   <ItemGroup>

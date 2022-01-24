@@ -9,8 +9,8 @@ namespace WebsiteMangaAnime.Models
 {
     public class User : IdentityUser
     {
-        [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Возраст")]
-        public byte Age { get; set; }
+        [Required(ErrorMessage = "Поле должно быть заполнено"), DataType(DataType.Date), Display(Name = "Возраст")]
+        public DateTime Birthday { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Аватар")]
         public string ImageLink { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Роль")]

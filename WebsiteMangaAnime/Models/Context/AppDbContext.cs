@@ -17,6 +17,7 @@ namespace WebsiteMangaAnime.Models.Context
         public DbSet<ProductReview> ProductReviews { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Ignore<Entity>();
             modelBuilder.Ignore<Product>();
             modelBuilder.Ignore<Review>();
             modelBuilder.Entity<Anime>().ToTable(nameof(Animes));

@@ -1,21 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+using WebsiteMangaAnime.Models.BaseClasses;
 
 namespace WebsiteMangaAnime.Models
 {
-    public class Character
+    public class Character : Entity
     {
-        [Key, Required, HiddenInput(DisplayValue = false)]
-        public Guid CharacterId { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Название")]
         public string Name { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Пол")]
         public Gender Gender { get; set; }
-        [Required(ErrorMessage = "Поле должно быть заполнено"), DataType(DataType.Date), Display(Name = "Название")]
+        [Required(ErrorMessage = "Поле должно быть заполнено"), DataType(DataType.Date), Display(Name = "Дата рождения")]
         public DateTime Birthday { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Рост")]
         public double Height { get; set; }
@@ -31,7 +27,7 @@ namespace WebsiteMangaAnime.Models
         public virtual ICollection<CharacterReview> CharacterReviews { get; set; }
         public Character()
         {
-            this.CharacterId = Guid.NewGuid();
+            this.Id = Guid.NewGuid().ToString();
             this.CharacterReviews = new List<CharacterReview>();
         }
     }

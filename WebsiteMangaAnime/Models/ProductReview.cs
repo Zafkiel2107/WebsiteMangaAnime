@@ -11,6 +11,6 @@ namespace WebsiteMangaAnime.Models
         [Required, Display(Name = "Произведение")]
         public virtual Product Product { get; set; }
         [Required, Display(Name = "Пользователь")]
-        public virtual IUser User { get; set; }
+        public virtual User User { get; set; }
     }
 }
