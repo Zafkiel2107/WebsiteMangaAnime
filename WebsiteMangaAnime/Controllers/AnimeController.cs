@@ -1,9 +1,9 @@
-﻿using PagedList;
+﻿using Ninject;
+using PagedList;
 using System.Linq;
 using System.Web.Mvc;
 using WebsiteMangaAnime.Models;
 using WebsiteMangaAnime.Models.DatabaseControl;
-using WebsiteMangaAnime.Models.Storage;
 
 namespace WebsiteMangaAnime.Controllers
 {
@@ -11,9 +11,10 @@ namespace WebsiteMangaAnime.Controllers
     {
         private IDatabase storage;
         private const int pageSize = 20;
-        public AnimeController()
+        [Inject]
+        public AnimeController(IDatabase storage)
         {
-            this.storage = new Storage();
+            this.storage = storage;
         }
         public ActionResult BestAnime(int? page)
         {

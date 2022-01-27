@@ -25,22 +25,25 @@ namespace WebsiteMangaAnime.Controllers
         private IAuthenticationManager authenticationManager => HttpContext.GetOwinContext().Authentication;
 
         [HttpGet]
+        public ActionResult Login() => View();
+        [HttpGet]
         public ActionResult Register() => View();
         [HttpGet]
         public ActionResult DisplayConfirmEmailInfo() => View();
         [HttpGet]
         public ActionResult SuccessedConfirmEmail() => View();
         [HttpGet]
+        public ActionResult ForgotPassword() => View();
+        [HttpGet]
         public ActionResult DisplayResetPasswordInfo() => View();
         [HttpGet]
         public ActionResult SuccessedResetPassword() => View();
 
-        [HttpPost, ExceptionLogger]
+        [HttpPost, ExceptionLogger, ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterModel registerModel)
         {
             if (!ModelState.IsValid)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            Role role = await roleContext.FindByNameAsync("User");
             User user = new User
             {
                 UserName = registerModel.UserName,
@@ -49,8 +52,8 @@ namespace WebsiteMangaAnime.Controllers
                 PasswordHash = GetPasswordHash(registerModel.Password)
             };
             IdentityResult identityUserResult = await userContext.CreateAsync(user, registerModel.Password);
-            Role baseRole = await roleContext.FindByNameAsync("User");
-            IdentityResult identityRoleResult = await userContext.AddToRoleAsync(user.Id, baseRole.Name);
+            Role role = await roleContext.FindByNameAsync("User");
+            IdentityResult identityRoleResult = await userContext.AddToRoleAsync(user.Id, role.Name);
             if(identityUserResult.Succeeded && identityRoleResult.Succeeded)
             {
                 userContext.UserTokenProvider = GetProvider();
@@ -82,7 +85,7 @@ namespace WebsiteMangaAnime.Controllers
             else
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
         }
-        [HttpPost, ExceptionLogger]
+        [HttpPost, ExceptionLogger, ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel loginModel)
         {
             if (!ModelState.IsValid)
@@ -104,7 +107,7 @@ namespace WebsiteMangaAnime.Controllers
             else
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
         }
-        [HttpPost, ExceptionLogger]
+        [HttpPost, ExceptionLogger, ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordModel forgotPasswordModel)
         {
             if (!ModelState.IsValid)

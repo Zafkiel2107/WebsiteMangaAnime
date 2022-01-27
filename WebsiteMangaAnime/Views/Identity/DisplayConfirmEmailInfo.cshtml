@@ -1,8 +1,12 @@
-﻿
-@{
-    ViewBag.Title = "DisplayConfirmEmailInfo";
+﻿@{
+    ViewBag.Title = "Подтверждение почты";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>DisplayConfirmEmailInfo</h2>
+<div class="container">
+    <h1>Подтверждение почты</h1>
+    <p class="lead">
+        На указанный электронный адрес было направлено письмо со ссылкой для подтверждения регистрации на сайте.
+        Если вы не получили данное письмо, нажмите @Html.ActionLink("cюда", "Register", "Identity").
+    </p>
+</div>
 

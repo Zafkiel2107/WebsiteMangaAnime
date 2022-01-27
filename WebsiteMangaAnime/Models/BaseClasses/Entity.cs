@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Web.Mvc;
 
 namespace WebsiteMangaAnime.Models.BaseClasses
@@ -7,5 +8,9 @@ namespace WebsiteMangaAnime.Models.BaseClasses
     {
         [Key, Required, HiddenInput(DisplayValue = false)]
         public string Id { get; set; }
+        public Entity()
+        {
+            this.Id = Guid.NewGuid().ToString();
+        }
     }
 }

@@ -22,6 +22,7 @@ namespace WebsiteMangaAnime.Models.Context
             modelBuilder.Ignore<Review>();
             modelBuilder.Entity<Anime>().ToTable(nameof(Animes));
             modelBuilder.Entity<Manga>().ToTable(nameof(Mangas));
+            base.OnModelCreating(modelBuilder);
         }
     }
 }

@@ -9,10 +9,6 @@ namespace WebsiteMangaAnime.Models
     {
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Жанр")]
         public GenreType GenreType { get; set; }
-        public Genre()
-        {
-            this.Id = Guid.NewGuid().ToString();
-        }
     }
     public enum GenreType : byte
     {

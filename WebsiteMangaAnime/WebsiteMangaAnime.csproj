@@ -77,6 +77,18 @@
     <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
     </Reference>
+    <Reference Include="Ninject, Version=3.3.3.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.3.3.3\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.3.3.0\lib\net45\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common.WebHost, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.Web.Common.WebHost.3.3.0\lib\net45\Ninject.Web.Common.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Mvc, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\packages\Ninject.MVC5.3.3.0\lib\net45\Ninject.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
@@ -177,6 +189,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202201271406250_1.cs" />
+    <Compile Include="Migrations\202201271406250_1.designer.cs">
+      <DependentUpon>202201271406250_1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Anime.cs" />
     <Compile Include="Models\BaseClasses\Entity.cs" />
@@ -189,6 +205,7 @@
     <Compile Include="Models\Context\AppDbContext.cs" />
     <Compile Include="Models\DatabaseControl\Database.cs" />
     <Compile Include="Models\DatabaseControl\IDatabase.cs" />
+    <Compile Include="Models\DI\NinjectDatabaseModule.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityControl\IdentityContext.cs" />
     <Compile Include="Models\IdentityControl\IdentityViewModels.cs" />
@@ -242,11 +259,13 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Anime\GetAnime.cshtml" />
     <Content Include="Views\Manga\GetManga.cshtml" />
-    <Content Include="Views\Identity\Register.cshtml" />
     <Content Include="Views\Identity\DisplayConfirmEmailInfo.cshtml" />
     <Content Include="Views\Identity\SuccessedConfirmEmail.cshtml" />
     <Content Include="Views\Identity\DisplayResetPasswordInfo.cshtml" />
     <Content Include="Views\Identity\SuccessedResetPassword.cshtml" />
+    <Content Include="Views\Identity\Register.cshtml" />
+    <Content Include="Views\Identity\ForgotPassword.cshtml" />
+    <Content Include="Views\Identity\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -265,6 +284,11 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202201271406250_1.resx">
+      <DependentUpon>202201271406250_1.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

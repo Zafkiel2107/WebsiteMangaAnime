@@ -27,7 +27,6 @@ namespace WebsiteMangaAnime.Models
         public virtual ICollection<CharacterReview> CharacterReviews { get; set; }
         public Character()
         {
-            this.Id = Guid.NewGuid().ToString();
             this.CharacterReviews = new List<CharacterReview>();
         }
     }

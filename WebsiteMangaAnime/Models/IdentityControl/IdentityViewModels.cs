@@ -19,7 +19,8 @@ namespace WebsiteMangaAnime.Models.IdentityControl
         public DateTime Birthday { get; set; }
         [Required,
         DataType(DataType.Password),
-        MinLength(5)]
+        MinLength(5),
+        Display(Name = "Пароль")]
         public string Password { get; set; }
         [Required,
         DataType(DataType.Password),

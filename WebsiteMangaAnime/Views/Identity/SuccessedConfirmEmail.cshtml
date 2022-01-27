@@ -1,8 +1,10 @@
-﻿
-@{
-    ViewBag.Title = "SuccessedConfirmEmail";
+﻿@{
+    ViewBag.Title = "Успешное подтверждение почты";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-
-<h2>SuccessedConfirmEmail</h2>
-
+<div class="container">
+    <h1>Успешное подтверждение почты</h1>
+    <p class="lead">
+        Почта успешно подтверждена. Для продолжения регистрации перейдите по @Html.ActionLink("ссылке", "Login", "Identity").
+    </p>
+</div>

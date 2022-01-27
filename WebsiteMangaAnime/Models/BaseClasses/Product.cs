@@ -31,7 +31,6 @@ namespace WebsiteMangaAnime.Models.BaseClasses
         public virtual ICollection<ProductReview> ProductReviews { get; set; }
         public Product()
         {
-            this.Id = Guid.NewGuid().ToString();
             this.RecommendationsNumber = 0;
             this.Genres = new List<Genre>();
             this.ProductReviews = new List<ProductReview>();

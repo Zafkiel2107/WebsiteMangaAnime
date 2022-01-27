@@ -4,7 +4,7 @@ using WebsiteMangaAnime.Models.BaseClasses;
 
 namespace WebsiteMangaAnime.Models.DatabaseControl
 {
-    internal interface IDatabase : IDisposable
+    public interface IDatabase : IDisposable
     {
         IEnumerable<TEntity> GetElements<TEntity>() where TEntity : Entity;
         TEntity GetElementById<TEntity>(string id) where TEntity : Entity;

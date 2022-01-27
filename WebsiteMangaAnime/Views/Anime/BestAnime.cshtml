@@ -2,41 +2,43 @@
 @using PagedList.Mvc
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewBag.Title = "Anime";
+    ViewBag.Title = "Аниме";
 }
-@Html.AntiForgeryToken()
-<div class="jumbotron">
-    <div class="">
-        <h2>Аниме</h2>
-        <p class="lead">
-            Популярное аниме за все время
-        </p>
-    </div>
-    <div class="input-lg">
-        @using (Html.BeginForm("Search", "Anime", FormMethod.Post))
-        {
-            <label><input type="text" name="srcvl" class="form-control" placeholder="Искать по аниме" /></label>
-            <label><input type="submit" class="btn btn-primary" value="Поиск" /></label>
-        }
-    </div>
-    <div class="glyphicon-filter">
-        <label class="control-label">Фильтр: </label>
-        @Html.EnumDropDownListFor(x => x.)
-    </div>
-</div>
-<div>
-    <div class="col-md-2">
-        @foreach (var anime in Model)
-        {
-            <p>
-                <input type="image" onclick="location.href='@Url.Action("GetAnime", "Anime", new { id = anime.Id })'" src="@System.Configuration.ConfigurationManager.AppSettings["ImagePath"]@anime.ImageLink" />
+<div class="container">
+    <div class="container">
+        <div class="text-left">
+            <h2>Аниме</h2>
+            <p class="lead">
+                Популярное аниме за все время
             </p>
-            <b>
-                @anime.Name
-            </b>
-        }
+        </div>
+        <div class="container">
+            <div class="input-lg">
+                @using (Html.BeginForm("Search", "Anime", FormMethod.Post))
+                {
+                    <label><input type="text" name="srcvl" class="form-control" placeholder="Искать по аниме" /></label>
+                    <label><input type="submit" class="btn btn-primary" value="Поиск" /></label>
+                }
+            </div>
+        </div>
     </div>
-    <div>
+    <hr/>
+    <div class="container">
+        <div class="col-md-4 text-center">
+            @foreach (var anime in Model)
+            {
+                <input type="image" onclick="location.href='@Url.Action("GetAnime", "Anime", new { id = anime.Id })'"
+                       src="@System.Configuration.ConfigurationManager.AppSettings["ImagePath"]@anime.ImageLink" />
+                <p>
+                    <b>@anime.Name</b>
+                </p>
+                <p>
+                    <b>Рейтинг : @anime.Rating</b>
+                </p>
+            }
+        </div>
+    </div>
+    <div class="container panel-footer">
         <p>Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount</p>
         <p>@Html.PagedListPager(Model, page => Url.Action("BestAnime", new { page }))</p>
     </div>
