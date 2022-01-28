@@ -1,0 +1,81 @@
+﻿@model WebsiteMangaAnime.Models.Character
+
+@{
+    ViewBag.Title = $"{Model.Name}";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <ul class="list-group">
+        <li class="list-group-item">
+            <h3 class="list-group-item-text">@Model.Name</h3>
+        </li>
+    </ul>
+    <div class="col-md-8">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => x.Gender)</b> : @Html.DisplayTextFor(x => x.Gender)
+                </p>
+            </li>
+            <li class="list-group-item">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => x.Birthday)</b> : @Html.DisplayTextFor(x => x.Birthday)
+                </p>
+            </li>
+            <li class="list-group-item">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => x.Height)</b> : @Html.DisplayTextFor(x => x.Height)
+                </p>
+            </li>
+            <li class="list-group-item">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => x.Weight)</b> : @Html.DisplayTextFor(x => x.Weight)
+                </p>
+            </li>
+            <li class="list-group-item">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => x.Rating)</b> : @Html.DisplayTextFor(x => x.Rating)
+                </p>
+            </li>
+            <li class="list-group-item">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => x.Description)</b> : @Html.DisplayTextFor(x => x.Description)
+                </p>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-4">
+        <ul class="list-group">
+            <li class="list-group-item">
+                <img class="img-thumbnail" src="@System.Configuration.ConfigurationManager.AppSettings["ImagePath"]@Model.ImageLink" />
+            </li>
+        </ul>
+    </div>
+</div>
+<hr />
+<div class="container" align="center">
+    <button onclick="ShowReviews()" class="btn btn-default">Показать отзывы</button>
+    <hr />
+    <div align="left" class="col-md-12" id="reviews" style="display : none">
+        @foreach (var review in Model.CharacterReviews)
+        {
+            <div class="col-md-4">
+                <p class="list-group-item-text">
+                    <img class="img-thumbnail" src="@System.Configuration.ConfigurationManager.AppSettings["ImagePath"]@review.User.ImageLink" />
+                </p>
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => review.User.UserName)</b> : @Html.DisplayTextFor(x => review.User.UserName)
+                </p>
+            </div>
+            <div class="col-md-8">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => review.Rating)</b> : @Html.DisplayTextFor(x => review.Rating)
+                </p>
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => review.Content)</b> : @Html.DisplayTextFor(x => review.Content)
+                </p>
+            </div>
+        }
+    </div>
+</div>

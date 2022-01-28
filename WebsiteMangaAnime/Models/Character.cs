@@ -25,9 +25,12 @@ namespace WebsiteMangaAnime.Models
         public string ImageLink { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Отзывы")]
         public virtual ICollection<CharacterReview> CharacterReviews { get; set; }
+        [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Продукты")]
+        public virtual ICollection<Product> Products { get; set; }
         public Character()
         {
             this.CharacterReviews = new List<CharacterReview>();
+            this.Products = new List<Product>();
         }
     }
     public enum Gender : byte

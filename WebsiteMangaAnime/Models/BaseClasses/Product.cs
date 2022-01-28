@@ -29,11 +29,14 @@ namespace WebsiteMangaAnime.Models.BaseClasses
         public string ImageLink { get; set; }
         [Required, Display(Name = "Отзывы")]
         public virtual ICollection<ProductReview> ProductReviews { get; set; }
+        [Required, Display(Name = "Персонажи")]
+        public virtual ICollection<Character> Characters { get; set; }
         public Product()
         {
             this.RecommendationsNumber = 0;
             this.Genres = new List<Genre>();
             this.ProductReviews = new List<ProductReview>();
+            this.Characters = new List<Character>();
         }
     }
     public enum Status : byte

@@ -4,6 +4,9 @@
     ViewBag.Title = $"{Model.Name}";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
+<script src='@Url.Content("~/Scripts/reviews.js")'></script>
+
 <div class="container">
     <ul class="list-group">
         <li class="list-group-item">
@@ -23,6 +26,15 @@
                     <b>@Html.DisplayNameFor(x => x.Status)</b> : @Html.DisplayTextFor(x => x.Status)
                 </p>
             </li>
+            @*<li class="list-group-item">
+                    <p class="list-group-item-text">
+                        <b>@Html.DisplayNameFor(x => x.Genres)</b> :
+                        @foreach(var genre in Model.Genres)
+                        {
+                            @genre.GenreName.Append(';')
+                        }
+                    </p>
+                </li>*@
             <li class="list-group-item">
                 <p class="list-group-item-text">
                     <b>@Html.DisplayNameFor(x => x.Year)</b> : @Html.DisplayTextFor(x => x.Year)
@@ -82,5 +94,61 @@
                 </iframe>
             </li>
         </ul>
+    </div>
+    <div class="col-md-8" align="center">
+        <div id="myCarousel" class="carousel slide">
+            <div class="carousel-inner">
+                <div class="item active">
+                    <img src="@System.Configuration.ConfigurationManager.AppSettings["ImagePath"]@System.Configuration.ConfigurationManager.AppSettings["CharactersImageCarousel"]">
+                </div>
+                @foreach (var character in Model.Characters)
+                {
+                    <div class="item">
+                        <img onclick="location.href='@Url.Action("GetCharacter", "Character", new { id = character.Id })'"
+                             src="@System.Configuration.ConfigurationManager.AppSettings["ImagePath"]@character.ImageLink">
+                        <p>
+                            <b>@character.Name</b>
+                        </p>
+                    </div>
+                }
+            </div>
+            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                <span class="glyphicon glyphicon-chevron-left"></span>
+                <span class="sr-only">Предыдущий</span>
+            </a>
+            <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                <span class="glyphicon glyphicon-chevron-right"></span>
+                <span class="sr-only">Следующий</span>
+            </a>
+        </div>
+    </div>
+</div>
+<hr/>
+<div class="container" align="center">
+    <button onclick="ShowReviews()" class="btn btn-default">Показать отзывы</button>
+    <hr/>
+    <div  align="left" class="col-md-12" id="reviews" style="display : none">
+        @foreach (var review in Model.ProductReviews)
+        {
+            <div class="col-md-4">
+                <p class="list-group-item-text">
+                    <img class="img-thumbnail" src="@System.Configuration.ConfigurationManager.AppSettings["ImagePath"]@review.User.ImageLink" />
+                </p>
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => review.User.UserName)</b> : @Html.DisplayTextFor(x => review.User.UserName)
+                </p>
+            </div>
+            <div class="col-md-8">
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => review.IsRecommended)</b> : @(review.IsRecommended ? "Рекомендую" : "Не рекомендую")
+                </p>
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => review.Rating)</b> : @Html.DisplayTextFor(x => review.Rating)
+                </p>
+                <p class="list-group-item-text">
+                    <b>@Html.DisplayNameFor(x => review.Content)</b> : @Html.DisplayTextFor(x => review.Content)
+                </p>
+            </div>
+        }
     </div>
 </div>

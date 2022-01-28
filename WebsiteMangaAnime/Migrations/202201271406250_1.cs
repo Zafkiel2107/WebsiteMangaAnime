@@ -27,22 +27,28 @@
                         ImageLink = c.String(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
-            
+
             CreateTable(
                 "dbo.Genres",
                 c => new
-                    {
-                        Id = c.String(nullable: false, maxLength: 128),
-                        GenreType = c.Byte(nullable: false),
-                        Anime_Id = c.String(maxLength: 128),
-                        Manga_Id = c.String(maxLength: 128),
-                    })
-                .PrimaryKey(t => t.Id)
+                {
+                    Id = c.String(nullable: false, maxLength: 128),
+                    GenreType = c.String(nullable: false),
+                })
+                .PrimaryKey(t => t.Id);
+
+            CreateTable(
+                "dbo.GenresProducts",
+                c => new
+                {
+                    Anime_Id = c.String(nullable: true, maxLength: 128),
+                    Manga_Id = c.String(nullable: true, maxLength: 128),
+                    Genre_Id = c.String(nullable: false, maxLength: 128),
+                })
                 .ForeignKey("dbo.Animes", t => t.Anime_Id)
                 .ForeignKey("dbo.Mangas", t => t.Manga_Id)
-                .Index(t => t.Anime_Id)
-                .Index(t => t.Manga_Id);
-            
+                .ForeignKey("dbo.Genres", t => t.Genre_Id);
+
             CreateTable(
                 "dbo.ProductReviews",
                 c => new
