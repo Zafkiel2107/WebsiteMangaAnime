@@ -144,6 +144,21 @@ namespace WebsiteMangaAnime.Controllers
             else
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
         }
+        [HttpPost, Authorize, ExceptionLogger]
+        public async Task<ActionResult> ConfirmPhoneNumber(string phoneNumber, string token)
+        {
+            //TODO
+            if (!ModelState.IsValid)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            userContext.UserTokenProvider = GetProvider();
+            IdentityResult resetPasswordResult = await userContext.ChangePhoneNumberAsync(this.User.Identity.GetUserId(), phoneNumber, token);
+            if (resetPasswordResult.Succeeded)
+            {
+                return RedirectToAction("", "");
+            }
+            else
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
+        }
         [Authorize]
         public ActionResult Logout()
         {

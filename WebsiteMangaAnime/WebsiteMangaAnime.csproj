@@ -204,6 +204,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.cs" />
+    <Compile Include="Controllers\AccountManageController.cs" />
     <Compile Include="Controllers\AnimeController.cs" />
     <Compile Include="Controllers\CharacterController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -228,6 +229,8 @@
     <Compile Include="Models\Context\AppDbContext.cs" />
     <Compile Include="Models\DatabaseControl\Database.cs" />
     <Compile Include="Models\DatabaseControl\IDatabase.cs" />
+    <Compile Include="Models\DataSelection\DataSelection.cs" />
+    <Compile Include="Models\DataSelection\FilterType.cs" />
     <Compile Include="Models\DI\NinjectDatabaseModule.cs" />
     <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityControl\IdentityContext.cs" />
@@ -301,6 +304,7 @@
     <Content Include="Views\Identity\ForgotPassword.cshtml" />
     <Content Include="Views\Identity\Login.cshtml" />
     <Content Include="Views\Character\GetCharacter.cshtml" />
+    <Content Include="Views\AccountManage\Settings.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -25,6 +25,10 @@
                     <li>@Html.ActionLink("Домашняя страница", "Main", "Home")</li>
                     <li>@Html.ActionLink("Лучшее из аниме", "BestAnime", "Anime")</li>
                     <li>@Html.ActionLink("Лучшее из манги", "BestManga", "Manga")</li>
+                    @if (this.User.Identity.IsAuthenticated)
+                    {
+                        <li>@Html.ActionLink("Настройки", "Settings", "AccountManage")</li>
+                    }
                 </ul>
             </div>
         </div>

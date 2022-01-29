@@ -26,15 +26,16 @@
                     <b>@Html.DisplayNameFor(x => x.Status)</b> : @Html.DisplayTextFor(x => x.Status)
                 </p>
             </li>
+            @*TODO*@
             @*<li class="list-group-item">
-                    <p class="list-group-item-text">
-                        <b>@Html.DisplayNameFor(x => x.Genres)</b> :
-                        @foreach(var genre in Model.Genres)
-                        {
-                            @genre.GenreName.Append(';')
-                        }
-                    </p>
-                </li>*@
+            <p class="list-group-item-text">
+                <b>@Html.DisplayNameFor(x => x.Genres)</b> :
+                @foreach(var genre in Model.Genres)
+                {
+                    @genre.GenreName.Append(';')
+                }
+            </p>
+        </li>*@
             <li class="list-group-item">
                 <p class="list-group-item-text">
                     <b>@Html.DisplayNameFor(x => x.Year)</b> : @Html.DisplayTextFor(x => x.Year)

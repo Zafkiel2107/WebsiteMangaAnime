@@ -1,5 +1,6 @@
 ﻿@model PagedList.IPagedList<WebsiteMangaAnime.Models.Anime>
 @using PagedList.Mvc
+@using WebsiteMangaAnime.Models.DataSelection
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewBag.Title = "Аниме";
@@ -13,13 +14,26 @@
             </p>
         </div>
         <div class="container">
-            <div class="input-lg">
-                @using (Html.BeginForm("Search", "Anime", FormMethod.Post))
-                {
-                    <label><input type="text" name="srcvl" class="form-control" placeholder="Искать по аниме" /></label>
-                    <label><input type="submit" class="btn btn-primary" value="Поиск" /></label>
-                }
-            </div>
+            <table class="table">
+                <tr class="row">
+                    <td class="col-md-6">
+                        @using (Ajax.BeginForm("Search", "Anime", new AjaxOptions { HttpMethod = "Post" }))
+                        {
+                            <label><input type="text" name="searchValue" class="form-control" placeholder="Искать по продукту" /></label>
+                            <label><input type="submit" class="btn btn-primary" value="Поиск" /></label>
+                        }
+                    </td>
+                    <td class="col-md-6">
+                        @using (Ajax.BeginForm("Filter", "Anime", new AjaxOptions { HttpMethod = "Post" }))
+                        {
+                            <label>@Html.DropDownList("filter",
+                                EnumHelper.GetSelectList(typeof(FilterType)),
+                                new { @class = "form-control" })</label>
+                            <label><input type="submit" class="btn btn-primary" value="Поиск" /></label>
+                        }
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
     <hr/>
@@ -38,8 +52,9 @@
             }
         </div>
     </div>
-    <div class="container panel-footer">
+    @*TODO*@
+    @*<div class="container panel-footer">
         <p>Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount</p>
         <p>@Html.PagedListPager(Model, page => Url.Action("BestAnime", new { page }))</p>
-    </div>
+    </div>*@
 </div>
