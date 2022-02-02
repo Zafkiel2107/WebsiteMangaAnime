@@ -122,7 +122,7 @@
 </div>s
 <hr />
 <div class="container" align="center">
-    @Html.Partial("GetProductReview", new { id = Model.Id, type = "manga" })
+    @Html.Action("GetProductReview", "ProductReview", new { id = Model.Id })
 </div>
 <hr />
 <div class="container" align="center">

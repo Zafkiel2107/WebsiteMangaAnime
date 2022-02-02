@@ -301,8 +301,8 @@
     <Content Include="Views\Identity\Login.cshtml" />
     <Content Include="Views\Character\GetCharacter.cshtml" />
     <Content Include="Views\AccountManage\Settings.cshtml" />
-    <Content Include="Views\CharacterReview\GetCharacterReview.cshtml" />
     <Content Include="Views\ProductReview\GetProductReview.cshtml" />
+    <Content Include="Views\CharacterReview\GetCharacterReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

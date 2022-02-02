@@ -55,7 +55,7 @@
 </div>
 <hr />
 <div class="container" align="center">
-    @Html.Partial("GetCharacterReview", new {id = Model.Id})
+    @Html.Action("GetCharacterReview", "CharacterReview", new { id = Model.Id })
 </div>
 <hr />
 <div class="container" align="center">

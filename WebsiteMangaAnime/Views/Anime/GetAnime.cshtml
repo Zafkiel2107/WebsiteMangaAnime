@@ -126,7 +126,7 @@
 </div>
 <hr />
 <div class="container" align="center">
-    @Html.Partial("~/Views/ProductReview/GetProductReview.cshtml", new {id = Model.Id})
+    @Html.Action("GetProductReview", "ProductReview", new {id = Model.Id})
 </div>
 <hr />
 <div class="container" align="center">
