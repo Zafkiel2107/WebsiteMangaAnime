@@ -210,12 +210,9 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\IdentityController.cs" />
     <Compile Include="Controllers\MangaController.cs" />
+    <Compile Include="Controllers\ReviewsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202201271406250_1.cs" />
-    <Compile Include="Migrations\202201271406250_1.designer.cs">
-      <DependentUpon>202201271406250_1.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Anime.cs" />
@@ -232,7 +229,6 @@
     <Compile Include="Models\DataSelection\DataSelection.cs" />
     <Compile Include="Models\DataSelection\FilterType.cs" />
     <Compile Include="Models\DI\NinjectDatabaseModule.cs" />
-    <Compile Include="Models\Genre.cs" />
     <Compile Include="Models\IdentityControl\IdentityContext.cs" />
     <Compile Include="Models\IdentityControl\IdentityViewModels.cs" />
     <Compile Include="Models\LogControl\ExceptionLog.cs" />
@@ -305,21 +301,18 @@
     <Content Include="Views\Identity\Login.cshtml" />
     <Content Include="Views\Character\GetCharacter.cshtml" />
     <Content Include="Views\AccountManage\Settings.cshtml" />
+    <Content Include="Views\CharacterReview\GetCharacterReview.cshtml" />
+    <Content Include="Views\ProductReview\GetProductReview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Files\Images\" />
+    <Folder Include="Files\Images\Default\" />
     <Folder Include="Views\Search\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\202201271406250_1.resx">
-      <DependentUpon>202201271406250_1.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

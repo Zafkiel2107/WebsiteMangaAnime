@@ -55,6 +55,10 @@
 </div>
 <hr />
 <div class="container" align="center">
+    @Html.Partial("GetCharacterReview", new {id = Model.Id})
+</div>
+<hr />
+<div class="container" align="center">
     <button onclick="ShowReviews()" class="btn btn-default">Показать отзывы</button>
     <hr />
     <div align="left" class="col-md-12" id="reviews" style="display : none">

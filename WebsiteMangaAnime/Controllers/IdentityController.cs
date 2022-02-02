@@ -39,7 +39,7 @@ namespace WebsiteMangaAnime.Controllers
         [HttpGet]
         public ActionResult SuccessedResetPassword() => View();
 
-        [HttpPost, ExceptionLogger, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterModel registerModel)
         {
             if (!ModelState.IsValid)
@@ -49,18 +49,23 @@ namespace WebsiteMangaAnime.Controllers
                 UserName = registerModel.UserName,
                 Email = registerModel.Email,
                 Birthday = registerModel.Birthday,
-                PasswordHash = GetPasswordHash(registerModel.Password)
+                PasswordHash = GetPasswordHash(registerModel.Password),
+                ImageLink = "Default/default-avatar.jpg"
             };
             IdentityResult identityUserResult = await userContext.CreateAsync(user, registerModel.Password);
-            Role role = await roleContext.FindByNameAsync("User");
-            IdentityResult identityRoleResult = await userContext.AddToRoleAsync(user.Id, role.Name);
-            if(identityUserResult.Succeeded && identityRoleResult.Succeeded)
+            if(identityUserResult.Succeeded)
             {
-                userContext.UserTokenProvider = GetProvider();
-                string token = await userContext.GenerateEmailConfirmationTokenAsync(user.Id);
-                string callbackUrl = Url.Action("ConfirmEmail", "Identity", new { id = user.Id, token }, protocol: Request.Url.Scheme);
-                await userContext.SendEmailAsync(user.Id, "Подтверждение почты", "Для подтверждения почты, перейдите по ссылке <a href=\"" + callbackUrl + "\">подтвердить</a>");
-                return RedirectToAction("DisplayConfirmEmailInfo", "Identity");
+                IdentityResult identityRoleResult = await userContext.AddToRoleAsync(user.Id, "User");
+                if (identityRoleResult.Succeeded)
+                {
+                    userContext.UserTokenProvider = GetProvider();
+                    string token = await userContext.GenerateEmailConfirmationTokenAsync(user.Id);
+                    string callbackUrl = Url.Action("ConfirmEmail", "Identity", new { id = user.Id, token }, protocol: Request.Url.Scheme);
+                    await userContext.SendEmailAsync(user.Id, "Подтверждение почты", "Для подтверждения почты, перейдите по ссылке <a href=\"" + callbackUrl + "\">подтвердить</a>");
+                    return RedirectToAction("DisplayConfirmEmailInfo", "Identity");
+                }
+                else
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             else
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -69,7 +74,7 @@ namespace WebsiteMangaAnime.Controllers
         public async Task<ActionResult> ConfirmEmail(string id, string token)
         {
             if(string.IsNullOrEmpty(id) && string.IsNullOrEmpty(token))
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
             User user = await userContext.FindByIdAsync(id);
             if(user != null)
             {
@@ -105,13 +110,13 @@ namespace WebsiteMangaAnime.Controllers
                 return RedirectToAction("Main", "Home");
             }
             else
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
         }
         [HttpPost, ExceptionLogger, ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordModel forgotPasswordModel)
         {
             if (!ModelState.IsValid)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
             User user = await userContext.FindByEmailAsync(forgotPasswordModel.Email);
             if(user != null)
             {
@@ -122,7 +127,7 @@ namespace WebsiteMangaAnime.Controllers
                 return RedirectToAction("DisplayResetPasswordInfo", "Identity");
             }
             else
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
         }
         [HttpPost, ExceptionLogger]
         public async Task<ActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
@@ -147,7 +152,6 @@ namespace WebsiteMangaAnime.Controllers
         [HttpPost, Authorize, ExceptionLogger]
         public async Task<ActionResult> ConfirmPhoneNumber(string phoneNumber, string token)
         {
-            //TODO
             if (!ModelState.IsValid)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             userContext.UserTokenProvider = GetProvider();

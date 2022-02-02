@@ -19,8 +19,8 @@ namespace WebsiteMangaAnime.Models.BaseClasses
         public double Rating { get; set; }
         [Required, Display(Name = "Количество рекомендаций")]
         public int RecommendationsNumber { get; set; }
-        [Required, Display(Name = "Жанры")]
-        public virtual ICollection<Genre> Genres { get; set; }
+        [Required, Display(Name = "Жанр")]
+        public Genre Genre { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), DataType(DataType.Date), Display(Name = "Год")]
         public short Year { get; set; }
         [Required(ErrorMessage = "Поле должно быть заполнено"), Display(Name = "Описание")]
@@ -34,10 +34,14 @@ namespace WebsiteMangaAnime.Models.BaseClasses
         public Product()
         {
             this.RecommendationsNumber = 0;
-            this.Genres = new List<Genre>();
             this.ProductReviews = new List<ProductReview>();
             this.Characters = new List<Character>();
         }
+    }
+    public enum Genre : byte
+    {
+        [Display(Name = "Школьная Жизнь")]
+        ШкольнаяЖизнь = 1,
     }
     public enum Status : byte
     {

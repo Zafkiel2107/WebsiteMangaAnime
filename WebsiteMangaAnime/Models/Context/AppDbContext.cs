@@ -12,7 +12,6 @@ namespace WebsiteMangaAnime.Models.Context
         public DbSet<Character> Characters { get; set; }
         public DbSet<CharacterReview> CharacterReviews { get; set; }
         public DbSet<ExceptionLog> ExceptionLogs { get; set; }
-        public DbSet<Genre> Genres { get; set; }
         public DbSet<Manga> Mangas { get; set; }
         public DbSet<ProductReview> ProductReviews { get; set; }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

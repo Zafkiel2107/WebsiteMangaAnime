@@ -28,14 +28,14 @@
             </li>
             @*TODO*@
             @*<li class="list-group-item">
-            <p class="list-group-item-text">
-                <b>@Html.DisplayNameFor(x => x.Genres)</b> :
-                @foreach(var genre in Model.Genres)
-                {
-                    @genre.GenreName.Append(';')
-                }
-            </p>
-        </li>*@
+                    <p class="list-group-item-text">
+                        <b>@Html.DisplayNameFor(x => x.Genres)</b> :
+                        @foreach(var genre in Model.Genres)
+                        {
+                            @genre.GenreName.Append(';')
+                        }
+                    </p>
+                </li>*@
             <li class="list-group-item">
                 <p class="list-group-item-text">
                     <b>@Html.DisplayNameFor(x => x.Year)</b> : @Html.DisplayTextFor(x => x.Year)
@@ -96,7 +96,7 @@
         <div id="myCarousel" class="carousel slide">
             <div class="carousel-inner">
                 <div class="item active">
-                    <img src="@System.Configuration.ConfigurationManager.AppSettings["ImagePath"]@System.Configuration.ConfigurationManager.AppSettings["CharactersImageCarousel"]">
+                    <img src="@System.Configuration.ConfigurationManager.AppSettings["ImagePath"]Default/default-characters.jpg">
                 </div>
                 @foreach (var character in Model.Characters)
                 {
@@ -119,6 +119,10 @@
             </a>
         </div>
     </div>
+</div>s
+<hr />
+<div class="container" align="center">
+    @Html.Partial("GetProductReview", new { id = Model.Id, type = "manga" })
 </div>
 <hr />
 <div class="container" align="center">

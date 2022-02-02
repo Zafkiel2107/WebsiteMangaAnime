@@ -28,14 +28,14 @@
             </li>
             @*TODO*@
             @*<li class="list-group-item">
-            <p class="list-group-item-text">
-                <b>@Html.DisplayNameFor(x => x.Genres)</b> :
-                @foreach(var genre in Model.Genres)
-                {
-                    @genre.GenreName.Append(';')
-                }
-            </p>
-        </li>*@
+                    <p class="list-group-item-text">
+                        <b>@Html.DisplayNameFor(x => x.Genres)</b> :
+                        @foreach(var genre in Model.Genres)
+                        {
+                            @genre.GenreName.Append(';')
+                        }
+                    </p>
+                </li>*@
             <li class="list-group-item">
                 <p class="list-group-item-text">
                     <b>@Html.DisplayNameFor(x => x.Year)</b> : @Html.DisplayTextFor(x => x.Year)
@@ -100,7 +100,7 @@
         <div id="myCarousel" class="carousel slide">
             <div class="carousel-inner">
                 <div class="item active">
-                    <img src="@System.Configuration.ConfigurationManager.AppSettings["ImagePath"]@System.Configuration.ConfigurationManager.AppSettings["CharactersImageCarousel"]">
+                    <img src="@System.Configuration.ConfigurationManager.AppSettings["ImagePath"]Default/default-characters.jpg">
                 </div>
                 @foreach (var character in Model.Characters)
                 {
@@ -124,11 +124,15 @@
         </div>
     </div>
 </div>
-<hr/>
+<hr />
+<div class="container" align="center">
+    @Html.Partial("~/Views/ProductReview/GetProductReview.cshtml", new {id = Model.Id})
+</div>
+<hr />
 <div class="container" align="center">
     <button onclick="ShowReviews()" class="btn btn-default">Показать отзывы</button>
-    <hr/>
-    <div  align="left" class="col-md-12" id="reviews" style="display : none">
+    <hr />
+    <div align="left" class="col-md-12" id="reviews" style="display : none">
         @foreach (var review in Model.ProductReviews)
         {
             <div class="col-md-4">
