@@ -237,7 +237,6 @@
     <Compile Include="Models\Manga.cs" />
     <Compile Include="Models\ProductReview.cs" />
     <Compile Include="Models\Services\EmailService.cs" />
-    <Compile Include="Models\Services\SmsService.cs" />
     <Compile Include="Models\Storage\Storage.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -340,6 +339,7 @@
           <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
         </WebProjectProperties>
       </FlavorProperties>
+      <UserProperties content_4bootstrap_1css_1map__JsonSchema="" />
     </VisualStudio>
   </ProjectExtensions>
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

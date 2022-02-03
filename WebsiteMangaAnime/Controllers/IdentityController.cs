@@ -39,11 +39,12 @@ namespace WebsiteMangaAnime.Controllers
         [HttpGet]
         public ActionResult SuccessedResetPassword() => View();
 
-        [HttpPost, ValidateAntiForgeryToken]
+        [HttpPost, ValidateAntiForgeryToken, ExceptionLogger]
         public async Task<ActionResult> Register(RegisterModel registerModel)
         {
             if (!ModelState.IsValid)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             User user = new User
             {
                 UserName = registerModel.UserName,
@@ -52,82 +53,73 @@ namespace WebsiteMangaAnime.Controllers
                 PasswordHash = GetPasswordHash(registerModel.Password),
                 ImageLink = "Default/default-avatar.jpg"
             };
+
             IdentityResult identityUserResult = await userContext.CreateAsync(user, registerModel.Password);
             if(identityUserResult.Succeeded)
-            {
-                IdentityResult identityRoleResult = await userContext.AddToRoleAsync(user.Id, "User");
-                if (identityRoleResult.Succeeded)
-                {
-                    userContext.UserTokenProvider = GetProvider();
-                    string token = await userContext.GenerateEmailConfirmationTokenAsync(user.Id);
-                    string callbackUrl = Url.Action("ConfirmEmail", "Identity", new { id = user.Id, token }, protocol: Request.Url.Scheme);
-                    await userContext.SendEmailAsync(user.Id, "Подтверждение почты", "Для подтверждения почты, перейдите по ссылке <a href=\"" + callbackUrl + "\">подтвердить</a>");
-                    return RedirectToAction("DisplayConfirmEmailInfo", "Identity");
-                }
-                else
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            else
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
+            IdentityResult identityRoleResult = await userContext.AddToRoleAsync(user.Id, "User");
+            if (!identityRoleResult.Succeeded)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
+
+            userContext.UserTokenProvider = GetProvider();
+            string token = await userContext.GenerateEmailConfirmationTokenAsync(user.Id);
+            string callbackUrl = Url.Action("ConfirmEmail", "Identity", new { id = user.Id, token }, protocol: Request.Url.Scheme);
+            await userContext.SendEmailAsync(user.Id, "Подтверждение почты", "Для подтверждения почты, перейдите по ссылке <a href=\"" + callbackUrl + "\">подтвердить</a>");
+            return RedirectToAction("DisplayConfirmEmailInfo", "Identity");
         }
         [HttpPost, ExceptionLogger]
         public async Task<ActionResult> ConfirmEmail(string id, string token)
         {
             if(string.IsNullOrEmpty(id) && string.IsNullOrEmpty(token))
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
+
             User user = await userContext.FindByIdAsync(id);
-            if(user != null)
-            {
-                userContext.UserTokenProvider = GetProvider();
-                IdentityResult confirmEmailResult = await userContext.ConfirmEmailAsync(id, token);
-                if(confirmEmailResult.Succeeded)
-                {
-                    return RedirectToAction("SuccessedConfirmEmail");
-                }
-                else
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
-            }
-            else
+            if(user == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
+
+            userContext.UserTokenProvider = GetProvider();
+            IdentityResult confirmEmailResult = await userContext.ConfirmEmailAsync(id, token);
+
+            if(!confirmEmailResult.Succeeded)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
+
+            return RedirectToAction("SuccessedConfirmEmail");
         }
         [HttpPost, ExceptionLogger, ValidateAntiForgeryToken]
         public async Task<ActionResult> Login(LoginModel loginModel)
         {
             if (!ModelState.IsValid)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             User user = await userContext.FindByEmailAsync(loginModel.Email);
-            if(user != null)
-            {
-                if(!user.EmailConfirmed)
+            if (user == null)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
+            if (!user.EmailConfirmed)
                     return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
 
-                ClaimsIdentity claimsIdentity = await userContext.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
-                authenticationManager.SignOut();
-                authenticationManager.SignIn(new AuthenticationProperties()
-                {
-                    IsPersistent = true
-                }, claimsIdentity);
-                return RedirectToAction("Main", "Home");
-            }
-            else
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
+            ClaimsIdentity claimsIdentity = await userContext.CreateIdentityAsync(user, DefaultAuthenticationTypes.ApplicationCookie);
+            authenticationManager.SignOut();
+            authenticationManager.SignIn(new AuthenticationProperties()
+            {
+                IsPersistent = true
+            }, claimsIdentity);
+            return RedirectToAction("Main", "Home");
         }
         [HttpPost, ExceptionLogger, ValidateAntiForgeryToken]
         public async Task<ActionResult> ForgotPassword(ForgotPasswordModel forgotPasswordModel)
         {
             if (!ModelState.IsValid)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
+
             User user = await userContext.FindByEmailAsync(forgotPasswordModel.Email);
-            if(user != null)
-            {
-                userContext.UserTokenProvider = GetProvider();
-                string token = await userContext.GeneratePasswordResetTokenAsync(user.Id);
-                string callbackUrl = Url.Action("ResetPassword", "Identity", new { id = user.Id, token }, protocol: Request.Url.Scheme);
-                await userContext.SendEmailAsync(user.Id, "Сброс пароля", "Для сброса пароля, перейдите по ссылке <a href=\"" + callbackUrl + "\">сбросить</a>");
-                return RedirectToAction("DisplayResetPasswordInfo", "Identity");
-            }
-            else
+            if (user == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
+
+            userContext.UserTokenProvider = GetProvider();
+            string token = await userContext.GeneratePasswordResetTokenAsync(user.Id);
+            string callbackUrl = Url.Action("ResetPassword", "Identity", new { id = user.Id, token }, protocol: Request.Url.Scheme);
+            await userContext.SendEmailAsync(user.Id, "Сброс пароля", "Для сброса пароля, перейдите по ссылке <a href=\"" + callbackUrl + "\">сбросить</a>");
+            return RedirectToAction("DisplayResetPasswordInfo", "Identity");
         }
         [HttpPost, ExceptionLogger]
         public async Task<ActionResult> ResetPassword(ResetPasswordModel resetPasswordModel)
@@ -135,31 +127,14 @@ namespace WebsiteMangaAnime.Controllers
             if (!ModelState.IsValid)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             User user = await userContext.FindByIdAsync(resetPasswordModel.Id);
-            if (user != null)
-            {
-                userContext.UserTokenProvider = GetProvider();
-                IdentityResult resetPasswordResult = await userContext.ResetPasswordAsync(resetPasswordModel.Id, resetPasswordModel.Token, resetPasswordModel.Password);
-                if (resetPasswordResult.Succeeded)
-                {
-                    return RedirectToAction("SuccessedResetPassword");
-                }
-                else
-                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
-            }
-            else
+
+            if (user == null)
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
-        }
-        [HttpPost, Authorize, ExceptionLogger]
-        public async Task<ActionResult> ConfirmPhoneNumber(string phoneNumber, string token)
-        {
-            if (!ModelState.IsValid)
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+
             userContext.UserTokenProvider = GetProvider();
-            IdentityResult resetPasswordResult = await userContext.ChangePhoneNumberAsync(this.User.Identity.GetUserId(), phoneNumber, token);
+            IdentityResult resetPasswordResult = await userContext.ResetPasswordAsync(resetPasswordModel.Id, resetPasswordModel.Token, resetPasswordModel.Password);
             if (resetPasswordResult.Succeeded)
-            {
-                return RedirectToAction("", "");
-            }
+                return RedirectToAction("SuccessedResetPassword");
             else
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
         }

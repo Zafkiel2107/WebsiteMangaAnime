@@ -12,7 +12,6 @@ namespace WebsiteMangaAnime.Models.IdentityControl
         public IdentityUserContext(IUserStore<User> store) : base(store)
         {
             this.EmailService = new EmailService();
-            this.SmsService = new SmsService();
         }
         public static IdentityUserContext CreateContext(IdentityFactoryOptions<IdentityUserContext> options,
             IOwinContext context)

@@ -38,9 +38,9 @@
     </div>
     <hr/>
     <div class="container">
-        <div class="col-md-4 text-center">
-            @foreach (var anime in Model)
-            {
+        @foreach (var anime in Model)
+        {
+            <div class="col-md-4 text-center">
                 <input type="image" onclick="location.href='@Url.Action("GetAnime", "Anime", new { id = anime.Id })'"
                        src="@System.Configuration.ConfigurationManager.AppSettings["ImagePath"]@anime.ImageLink" />
                 <p>
@@ -49,12 +49,11 @@
                 <p>
                     <b>Рейтинг : @anime.Rating</b>
                 </p>
+            </div>
             }
         </div>
-    </div>
-    @*TODO*@
-    @*<div class="container panel-footer">
+    <div class="container panel-footer">
         <p>Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount</p>
-        <p>@Html.PagedListPager(Model, page => Url.Action("BestAnime", new { page }))</p>
-    </div>*@
+        <p>@Html.PagedListPager(Model, page => Url.Action(ViewContext.RouteData.Values["Action"].ToString(), new { page }))</p>
+    </div>
 </div>

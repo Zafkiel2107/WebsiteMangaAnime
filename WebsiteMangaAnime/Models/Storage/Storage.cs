@@ -66,7 +66,6 @@ namespace WebsiteMangaAnime.Models.Storage
             where TEntity : Entity
         {
             db.Entry<TEntity>(item).State = EntityState.Modified;
-            await db.SaveChangesAsync();
             int result = await db.SaveChangesAsync();
             if (result > 0)
             {

@@ -14,40 +14,34 @@ namespace WebsiteMangaAnime.Controllers
     public class AccountManageController : Controller
     {
         private IdentityUserContext userContext => HttpContext.GetOwinContext().GetUserManager<IdentityUserContext>();
-        [Authorize]
+        [HttpGet, Authorize]
         public ActionResult Settings()
         {
             User user = userContext.FindById(HttpContext.User.Identity.GetUserId());
             return View(user);
         }
         [HttpPost, Authorize]
-        public async Task<ActionResult> ChangeSettings(User user)
+        public async Task<ActionResult> ChangeSettings(string phoneNumber, string imageLink, string userName)
         {
+            User user = userContext.FindById(HttpContext.User.Identity.GetUserId());
+            user.PhoneNumber = phoneNumber;
+            user.ImageLink = imageLink;
+            user.UserName = userName;
             IdentityResult identityResult = await userContext.UpdateAsync(user);
             if (identityResult.Succeeded)
-            {
                 return RedirectToAction("Settings");
-            }
             else
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
         }
+        [HttpPost, Authorize]
         public void ChangeEmail(string email)
         {
             User user = userContext.FindById(User.Identity.GetUserId());
+            user.Email = email;
             userContext.UserTokenProvider = GetProvider();
             string token = userContext.GenerateEmailConfirmationToken(user.Id);
             string callbackUrl = Url.Action("ConfirmEmail", "Identity", new { id = user.Id, token }, protocol: Request.Url.Scheme);
             userContext.SendEmail(user.Id, "Подтверждение почты", "Для подтверждения почты, перейдите по ссылке <a href=\"" + callbackUrl + "\">подтвердить</a>");
-        }
-        public void ChangePhone(string phone)
-        {
-            var code = userContext.GenerateChangePhoneNumberToken(User.Identity.GetUserId(), phone);
-            var message = new IdentityMessage
-            {
-                Destination = phone,
-                Body = "Ваш код безопасности: " + code
-            };
-            userContext.SmsService.Send(message);
         }
         private DataProtectorTokenProvider<User> GetProvider()
         {

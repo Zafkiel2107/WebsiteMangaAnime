@@ -26,11 +26,13 @@
                     <td class="col-md-6">
                         @using (Ajax.BeginForm("Filter", "Manga", new AjaxOptions { HttpMethod = "Post" }))
                         {
-                            <label>@Html.DropDownList("filter",
-                                EnumHelper.GetSelectList(typeof(FilterType)),
-                                new { @class = "form-control" })</label>
-                            <label><input type="submit" class="btn btn-primary" value="Поиск" /></label>
-                        }
+                            <label>
+                                @Html.DropDownList("filter",
+                         EnumHelper.GetSelectList(typeof(FilterType)),
+                         new { @class = "form-control" })
+                        </label>
+                        <label><input type="submit" class="btn btn-primary" value="Поиск" /></label>
+                    }
                     </td>
                 </tr>
             </table>
@@ -52,9 +54,8 @@
             }
         </div>
     </div>
-    @*TODO*@
-    @*<div class="container panel-footer">
-            <p>Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount</p>
-            <p>@Html.PagedListPager(Model, page => Url.Action("BestManga", new { page }))</p>
-        </div>*@
+    <div class="container panel-footer">
+        <p>Страница @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) из @Model.PageCount</p>
+        <p>@Html.PagedListPager(Model, page => Url.Action(ViewContext.RouteData.Values["Action"].ToString(), new { page }))</p>
+    </div>
 </div>

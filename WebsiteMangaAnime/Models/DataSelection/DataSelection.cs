@@ -20,7 +20,7 @@ namespace WebsiteMangaAnime.Models.DataSelection
         {
             IPagedList<T> products = storage.GetElements<T>()
                 .OrderByDescending(x => x.RecommendationsNumber)
-                .Where(x => x.Name.Contains(searchValue))
+                .Where(x => x.Name.IndexOf(searchValue, StringComparison.OrdinalIgnoreCase) >= 0)
                 .ToPagedList(page ?? 1, pageSize);
             return products;
         }
@@ -43,7 +43,7 @@ namespace WebsiteMangaAnime.Models.DataSelection
             };
 
             IPagedList<T> products = storage.GetElements<T>()
-                .OrderBy(order)
+                .OrderByDescending(order)
                 .ToPagedList(page ?? 1, pageSize);
             return products;
         }
