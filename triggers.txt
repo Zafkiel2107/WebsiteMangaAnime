@@ -1,0 +1,3 @@
+AnimeMangaAvgRating - устанавливает средний рейтинг при обновлении таблицы [dbo].[ProductReviews]
+CountRecommendations - устанавливает поле RecommendationsNumber при обновлении таблицы [dbo].[ProductReviews]
+CharacterAvgRating - устанавливает средний рейтинг при обновлении таблицы [dbo].[CharacterReviews]

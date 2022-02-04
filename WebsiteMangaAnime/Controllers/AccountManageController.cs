@@ -20,9 +20,11 @@ namespace WebsiteMangaAnime.Controllers
             User user = userContext.FindById(HttpContext.User.Identity.GetUserId());
             return View(user);
         }
-        [HttpPost, Authorize]
+        [HttpPost, ValidateAntiForgeryToken, Authorize]
         public async Task<ActionResult> ChangeSettings(string phoneNumber, string imageLink, string userName)
         {
+            if(!ModelState.IsValid)
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
             User user = userContext.FindById(HttpContext.User.Identity.GetUserId());
             user.PhoneNumber = phoneNumber;
             user.ImageLink = imageLink;
@@ -33,15 +35,18 @@ namespace WebsiteMangaAnime.Controllers
             else
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest, "Некорректный запрос");
         }
-        [HttpPost, Authorize]
+        [HttpPost, ValidateAntiForgeryToken, Authorize]
         public void ChangeEmail(string email)
         {
-            User user = userContext.FindById(User.Identity.GetUserId());
-            user.Email = email;
-            userContext.UserTokenProvider = GetProvider();
-            string token = userContext.GenerateEmailConfirmationToken(user.Id);
-            string callbackUrl = Url.Action("ConfirmEmail", "Identity", new { id = user.Id, token }, protocol: Request.Url.Scheme);
-            userContext.SendEmail(user.Id, "Подтверждение почты", "Для подтверждения почты, перейдите по ссылке <a href=\"" + callbackUrl + "\">подтвердить</a>");
+            if (ModelState.IsValid)
+            {
+                User user = userContext.FindById(User.Identity.GetUserId());
+                user.Email = email;
+                userContext.UserTokenProvider = GetProvider();
+                string token = userContext.GenerateEmailConfirmationToken(user.Id);
+                string callbackUrl = Url.Action("ConfirmEmail", "Identity", new { id = user.Id, token }, protocol: Request.Url.Scheme);
+                userContext.SendEmail(user.Id, "Подтверждение почты", "Для подтверждения почты, перейдите по ссылке <a href=\"" + callbackUrl + "\">подтвердить</a>");
+            }
         }
         private DataProtectorTokenProvider<User> GetProvider()
         {

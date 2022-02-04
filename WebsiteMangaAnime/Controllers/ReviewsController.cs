@@ -33,7 +33,7 @@ namespace WebsiteMangaAnime.Controllers
                 storage.Update<CharacterReview>(characterReview);
             else
                 storage.Create<CharacterReview>(characterReview);
-            return RedirectToAction("");
+            return RedirectToAction("Main", "Home");
         }
     }
     public class ProductReviewController : Controller
@@ -61,7 +61,7 @@ namespace WebsiteMangaAnime.Controllers
                 storage.Update<ProductReview>(productReview);
             else
                 storage.Create<ProductReview>(productReview);
-            return RedirectToAction("");
+            return RedirectToAction("Main", "Home");
         }
     }
 }

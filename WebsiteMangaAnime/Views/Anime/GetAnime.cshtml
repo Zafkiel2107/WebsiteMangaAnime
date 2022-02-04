@@ -120,9 +120,21 @@
     </div>
 </div>
 <hr />
-<div class="container" align="center">
-    @*@Html.Action("GetProductReview", "ProductReview", new {id = Model.Id})*@
-</div>
+@if (User.Identity.IsAuthenticated)
+{
+    <div class="container" align="center">
+        @Html.Action("GetProductReview", "ProductReview", new { id = Model.Id })
+    </div>
+}
+else
+{
+    <div class="form-group" align="center">
+        <label class="text-danger">
+            Оставлять отзывы могут только зарегистрированные пользователи.
+            Для регистрации перейдите по @Html.ActionLink("ссылке", "Register", "Identity")
+        </label>
+    </div>
+}
 <hr />
 <div class="container" align="center">
     <button onclick="ShowReviews()" class="btn btn-default">Показать отзывы</button>
@@ -130,15 +142,13 @@
     <div align="left" class="col-md-12" id="reviews" style="display : none">
         @foreach (var review in Model.ProductReviews)
         {
-            <div class="col-md-4">
+            <div class="col-md-2">
                 <p class="list-group-item-text">
                     <img class="img-thumbnail" src="@System.Configuration.ConfigurationManager.AppSettings["ImagePath"]@review.User.ImageLink" />
                 </p>
                 <p class="list-group-item-text">
                     <b>@Html.DisplayNameFor(x => review.User.UserName)</b> : @Html.DisplayTextFor(x => review.User.UserName)
                 </p>
-            </div>
-            <div class="col-md-8">
                 <p class="list-group-item-text">
                     <b>@Html.DisplayNameFor(x => review.IsRecommended)</b> : @(review.IsRecommended ? "Рекомендую" : "Не рекомендую")
                 </p>
